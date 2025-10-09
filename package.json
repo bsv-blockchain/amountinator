@@ -1,5 +1,5 @@
 {
-  "name": "amountinator",
+  "name": "@bsv/amountinator",
   "version": "0.2.12",
   "description": "Currency amount conversion",
   "author": "Peer-to-peer Privacy Systems Research, LLC & BSV Association",
