@@ -12,6 +12,7 @@ export class CurrencyConverter {
   public exchangeRates: ExchangeRates
   public preferredCurrency: string
   private services: Services
+  private settingsManager: WalletSettingsManager
 
   private readonly refreshInterval: number
   private lastRateFetch = 0
@@ -24,11 +25,12 @@ export class CurrencyConverter {
   /** 
    * @param refreshInterval  How often to pull new rates (ms), if 0, it never auto-refreshes
    */
-  constructor(refreshInterval: number = DEFAULT_REFRESH_INTERVAL) {
+  constructor(refreshInterval: number = DEFAULT_REFRESH_INTERVAL, settingsManager: WalletSettingsManager | undefined = undefined) {
     this.refreshInterval = refreshInterval > 0 ? refreshInterval : 0
     this.services = new Services('main')
     this.exchangeRates = { usdPerBsv: 0, gbpPerUsd: 0, eurPerUsd: 0 }
     this.preferredCurrency = 'USD'
+    this.settingsManager = settingsManager || new WalletSettingsManager(new WalletClient())
   }
 
   /**
@@ -102,7 +104,7 @@ export class CurrencyConverter {
     if (this.currencyPromise) return this.currencyPromise
   
     this.currencyPromise = (async () => {
-      const settingsManager = new WalletSettingsManager(new WalletClient())
+      const settingsManager = this.settingsManager
 
       const newCurrency = (await settingsManager.get()).currency ?? 'SATS'
       if (newCurrency !== this.preferredCurrency) {
