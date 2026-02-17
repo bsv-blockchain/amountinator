@@ -32,7 +32,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@bsv/sdk": "^1.8.2",
-    "@bsv/wallet-toolbox-client": "^1.6.26"
+    "@bsv/sdk": "^2.0.3",
+    "@bsv/wallet-toolbox-client": "^2.0.16"
   }
 }
